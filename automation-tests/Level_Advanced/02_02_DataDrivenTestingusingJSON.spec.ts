@@ -14,7 +14,7 @@ for (const credentials of credentialsList) {
     test(`Data driven testing using JSON file: ${credentials.Username}`, async ({ page }) => {
 
         // Accessing ENV File 
-        await page.goto(`${process.env.GITHUB_LOGIN_URL}`);
+        await page.goto(`${process.env.WEBSITE_LOGIN_URL}`);
 
         // Providing Username and Password
         await page.getByRole('textbox', { name: 'Username or email address' }).fill(credentials.Username);
