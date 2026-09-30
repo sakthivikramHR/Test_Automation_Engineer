@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { readExcelFile } from '../../src/utils/Excel_Helper';
 
-const filePath = path.join(__dirname,'../../test-data/quality-assurance/test-data-credentials.xlsx');
+const filePath = path.join(__dirname,'../../test-data/02_quality-assurance/test-data-credentials.xlsx');
 
 const credentialsExcelList = readExcelFile(filePath);
 

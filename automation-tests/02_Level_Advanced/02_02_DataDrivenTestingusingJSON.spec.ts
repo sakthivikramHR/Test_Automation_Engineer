@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import testData from '../../test-data/quality-assurance/test-data-credentials.json';
+import testData from '../../test-data/02_quality-assurance/test-data-credentials.json';
 
 type TestData = {
     Id: number;

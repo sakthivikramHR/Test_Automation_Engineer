@@ -10,7 +10,7 @@ type TestData = {
 };
 
 const credentialsList = parse(
-    fs.readFileSync(path.join(__dirname, '../../test-data/quality-assurance/test-data-credentials.csv')),
+    fs.readFileSync(path.join(__dirname, '../../test-data/02_quality-assurance/test-data-credentials.csv')),
     {
         columns: true,
         skipEmptyLines: true,
