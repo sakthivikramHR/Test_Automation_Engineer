@@ -1,29 +1,42 @@
-import { test, expect } from '@playwright/test';
-import fs from 'fs';
-import path from 'path';
-import { readExcelFile } from '../../src/utils/Excel_Helper';
-import { Github_HomePage } from '../../src/pages/Github_HomePage';
-import { Github_Result } from '../../src/pages/Github_Login_Result';
+import { test, expect } from "@playwright/test";
+import fs from "fs";
+import path from "path";
+import { readExcelFile } from "../../src/utils/Excel_Helper";
+import { Github_HomePage } from "../../src/pages/Github_HomePage";
+import { Github_Result } from "../../src/pages/Github_Login_Result";
 
-const filePath = path.join(__dirname,'../../test-data/02_quality-assurance/test-data-credentials.xlsx');
+const filePath = path.join(
+  __dirname,
+  "../../test-data/02_quality-assurance/test-data-credentials.xlsx",
+);
 
 const credentialsExcelList = readExcelFile(filePath);
 
 for (const credentials of credentialsExcelList) {
+  test(`Data driven testing using Page Object Model: ${credentials.Username}`, async ({
+    page,
+  }) => {
+    /*await page.setViewportSize({
+      width: 1100,
+      height: 911,
+    });*/
+    console.log("Github Login Test with POM started..");
 
-    test(`Data driven testing using Page Object Model: ${credentials.Username}`, async ({ page }) => {
+    const githubHomePage = new Github_HomePage(page);
 
-        const githubHomePage = new Github_HomePage(page);
-    
-        await githubHomePage.goToURL();
+    await githubHomePage.goToURL();
 
-        await githubHomePage.enterCredentials(credentials.Username, credentials.Password);
+    await githubHomePage.enterCredentials(
+      credentials.Username,
+      credentials.Password,
+    );
 
-        await githubHomePage.clickingSignInButton();
+    await githubHomePage.clickingSignInButton();
 
-        const githubLoginResult = new Github_Result(page);
+    const githubLoginResult = new Github_Result(page);
 
-        await githubLoginResult.CheckLoginFunctionality("Incorrect username or password.");
-
-    });
+    await githubLoginResult.CheckLoginFunctionality(
+      "Incorrect username or password.",
+    );
+  });
 }
