@@ -14,6 +14,18 @@ export class Github_Result {
     }
 
     async CheckLoginFunctionality(expectedAlert:string) {
-        await expect(this.alertFunction).toContainText(expectedAlert)
+        const errorAlert = this.page.locator(".js-flash-alert");
+        await expect(errorAlert).toBeVisible();
+        await expect(errorAlert).toContainText(expectedAlert)
     }
+
+    async assertLoginErrorVisuals(errorTestImage: number) {
+        await expect(this.alertFunction).toBeVisible();
+
+        //const errorCard = this.page.locator(".js-flash-alert");
+        await expect(this.alertFunction).toHaveScreenshot([
+            `screenshots`,
+            `github-login-error-${errorTestImage}.png`
+        ]);
+  }
 }

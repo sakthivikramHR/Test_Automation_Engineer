@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-import fs from 'fs';
 import path from 'path';
 import { readExcelFile } from '../../src/utils/Excel_Helper';
 

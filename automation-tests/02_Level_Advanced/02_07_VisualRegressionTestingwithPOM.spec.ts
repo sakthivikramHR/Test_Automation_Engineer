@@ -1,29 +1,27 @@
-import { test, expect } from "@playwright/test";
-import path from 'path';
+//import { test, expect } from "@playwright/test";
+import { test } from "../../src/fixture/Testfixture";
+import path from "path";
 import { readExcelFile } from "../../src/utils/Excel_Helper";
 import { Github_HomePage } from "../../src/pages/Github_HomePage";
 import { Github_Result } from "../../src/pages/Github_Login_Result";
 
-const filePath = path.join(
-  __dirname,
+const filePath = path.join(__dirname,
   "../../test-data/02_quality-assurance/test-data-credentials.xlsx",
 );
 
 const credentialsExcelList = readExcelFile(filePath);
 
 for (const credentials of credentialsExcelList) {
-  test(`Data driven testing using Page Object Model: ${credentials.Username}`, async ({
+  test(`Data driven testing using Page Object Model (POM) using Fixtures: ${credentials.Id}`, async ({
     page,
   }) => {
-    /*await page.setViewportSize({
-      width: 1100,
-      height: 911,
-    });*/
     console.log("Github Login Test with POM started..");
 
     const githubHomePage = new Github_HomePage(page);
 
-    await githubHomePage.goToURL();
+    await githubHomePage.goToURLForVisualTesting();
+
+    await githubHomePage.assertPageVisuals();
 
     await githubHomePage.enterCredentials(
       credentials.Username,
@@ -34,8 +32,10 @@ for (const credentials of credentialsExcelList) {
 
     const githubLoginResult = new Github_Result(page);
 
-    await githubLoginResult.CheckLoginFunctionality(
-      "Incorrect username or password.",
-    );
+    await githubLoginResult.CheckLoginFunctionality("Incorrect username or password.");
+
+    await githubLoginResult.assertLoginErrorVisuals(credentials.Id);
+
+    console.log("Github Login Test with POM Ended..");
   });
 }
