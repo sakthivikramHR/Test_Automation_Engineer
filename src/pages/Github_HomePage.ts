@@ -1,4 +1,5 @@
 import { Locator, Page } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 
 export class Github_HomePage {
@@ -10,10 +11,9 @@ export class Github_HomePage {
 
     constructor(page:Page) {
         
-        this.page = page;
-        
+        this.page = page;        
         this.usernameTextBox = page.getByRole('textbox', { name: 'Username or email address' });
-        this.passwordTextBox = page.getByRole('textbox', { name: 'Password' });
+        this.passwordTextBox = page.getByLabel('Password');
         this.signinButton = page.getByRole('button', { name: 'Sign in', exact: true })
 
     }
@@ -21,6 +21,17 @@ export class Github_HomePage {
     async goToURL () {
         await this.page.goto(`${process.env.WEBSITE_LOGIN_URL}`);
     }
+
+    async goToURLForVisualTesting () {
+        await this.page.goto(`${process.env.WEBSITE_LOGIN_URL}`);
+        await this.page.locator("form").waitFor();
+    }
+
+    async assertPageVisuals() {
+        await expect(this.page).toHaveScreenshot("github-login-page.png", {
+        maxDiffPixelRatio: 0.01,
+        mask: [this.page.locator('input[type="password"]')], 
+    });}
 
     async enterCredentials(UsernameCredentials:string, PasswordCredentials:string) {
         await this.usernameTextBox.click();
@@ -33,4 +44,5 @@ export class Github_HomePage {
     async clickingSignInButton() {
         await this.signinButton.click();
     }
+  
 }
