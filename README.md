@@ -1,4 +1,5 @@
 # End-to-End Automation Project with Playwright & Testscript
+[![Playwright Tests](https://github.com/sakthivikramHR/Test_Automation_Engineer/actions/workflows/playwright.yml/badge.svg)](https://github.com/sakthivikramHR/Test_Automation_Engineer/actions/workflows/playwright.yml)
 
 ## A fully functional project that helps users to navigate through important concepts of Playwright
 
